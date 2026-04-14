@@ -1,27 +1,53 @@
 async function signup(event){
-  event.preventDefault();//prevent page redirect
+  event.preventDefault();
 
   let form = event.target;
-  let fields = event.target.elements;
+  let fields = form.elements;
   
   let data = {
-    username: fields['username'].value,
-    email: fields['email'].value,
-    password: fields['password'].value,
+    username: fields['username'].value.trim(),
+    email: fields['email'].value.trim(),
+    password: fields['password'].value
+  };
+
+  if (!data.username || !data.email || !data.password) {
+    toast("Please fill all fields");
+    return;
+  }
+  
+  if (data.password.length < 8) {
+    toast("Password must be at least 8 characters long");
+    return;
   }
 
-  //reset form
+  if (!data.email.includes('@')) {
+    toast("Please enter a valid email address");
+    return;
+  }
+
   form.reset();
 
-  //send data to application server
   let result = await sendRequest(`${server}/signup`, 'POST', data);
   
-  if('detail' in result){
-    toast("Register Failed: "+result['detail']);//show error message
-  }else{
-    toast("Register Successful");
-    window.location.href= 'index.html';//redirect the page
+  console.log("Signup response:", result); 
+
+  if (result.detail) {
+    toast("Register Failed: " + result.detail);
+  } 
+  else if (result.id || result.username) {
+    toast("Register Successful!!");
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1200);
+  } 
+  else {
+    toast("Register Failed: Unknown error");
   }
 }
-//attach signup to submit event of form
-document.forms['signUpForm'].addEventListener('submit', signup);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('signUpForm') || document.forms['signUpForm'];
+  if (form) {
+    form.addEventListener('submit', signup);
+  }
+});
