@@ -20,51 +20,32 @@
       <div class="nav-content">
         <ul class="tabs tabs-transparent">
           <li class="tab"><a class="active" href="#todo">To Do</a></li>
-          <li class="tab"><a  href="#search">Image Search</a></li>
+          <li class="tab"><a href="#search">Image Search</a></li>
         </ul>
       </div>
     </nav>
 
     <section id="todo" class="col s12 container">
-        <div class="card" >
-          <div class="card-content">
-            <span class="card-title">Create Todo</span>
-            <form name="addForm">
-              <div class="input-field">
-                <input type="text" name="addText" placeholder="enter to-do" class="materialize-textarea"></textarea>
-                <label for="addText">Enter todo Text</label>
-              </div>
-              <input class="blue btn white-text" type="submit" value="SAVE" />
-            </form>
-          </div>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Create Todo</span>
+          <form name="addForm">
+            <div class="input-field">
+              <input type="text" name="addText" placeholder="enter to-do" class="materialize-textarea">
+              <label for="addText">Enter todo Text</label>
+            </div>
+            <input class="blue btn white-text" type="submit" value="SAVE" />
+          </form>
         </div>
-
-        <ul class="collection with-header" id="result"></ul>
-
-        <input type="button" value="button1" data-name="bob" data-age="34"  onclick="printData(event)" >
-        <input type="button" value="button2" data-name="sam" data-age="22"  onclick="printData(event)" >
-        <input type="button" value="button3" data-name="rob" data-age="19"  onclick="printData(event)" >
-        <span id="res"></span>
-        <script>
-          function printData(event){
-            let button = event.target;//get element the event was emitted form
-            let name = button.dataset['name'];
-            let age = button.dataset['age'];
-            let value = button.value;
-            //show data from element
-            document.querySelector('#res').innerHTML = `${value} : ${name} is ${age} years old`;
-          }
-        </script>
-
-
+      </div>
+      <ul class="collection with-header" id="result"></ul>
     </section>
     
     
     <section id="search" class="col s12">Tab 2</section>
 
     <script src="util.js"></script>
-
-    <script src="app.js"> </script>
+    <script src="app.js"></script>
     
   </body>
 </html>
