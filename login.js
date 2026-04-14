@@ -1,32 +1,35 @@
 async function login(event) {
-  // Prevent default action ie page direction
   event.preventDefault();
 
-  // Get form data
   const form = event.target;
-
   let fields = form.elements;
-
-  let data = {
-    username: fields['username'].value,
-    password: fields['password'].value,
-  }
+  let formData = new URLSearchParams();
+  formData.append('username', fields['username'].value);
+  formData.append('password', fields['password'].value);
 
   form.reset();
 
-  let result = await sendRequest(`${server}/login`, 'POST', data);
- 
-  
-  if ("error" in result) {
-    toast("Login Failed: ");
-  } else {
-    toast("Logged Successful");
+  try {
+    let response = await fetch(`${server}/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData
+    });
     
-    window.localStorage.setItem('access_token', result.access_token);
-    window.location.href = 'app.html';
+    let result = await response.json();
+    
+    if (response.ok) {
+      toast("Login Successful");
+      window.localStorage.setItem('access_token', result.access_token);
+      window.location.href = 'app.html';
+    } else {
+      toast("Login Failed: " + (result.detail || "Unknown error"));
+    }
+  } catch(error) {
+    toast("Login Failed: " + error.message);
   }
-
 }
 
 document.forms['loginForm'].addEventListener('submit', login);
-// document.querySelector('#loginForm').onSubmit(login);
