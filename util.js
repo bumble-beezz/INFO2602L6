@@ -1,5 +1,5 @@
 // replace with your fork of the completed lab 3 repl https://replit.com/@Snickdx/INFO-2602-Lab-3-Completed
-const server = "https://replit.com/@bumblebeezz/info2602-fastapi-l4-completed";
+const server = "http://localhost:8000"; // the replit way was not working oml
 
 function toast(message){
   M.toast({html: message});
